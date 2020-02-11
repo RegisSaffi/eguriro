@@ -62,6 +62,13 @@
 </ul>
 </li>
 
+<li class="">
+<a href="sendmail.php" class="waves-effect waves-dark">
+<span class="pcoded-micon"><i class="feather icon-message-circle"></i></span>
+<span class="pcoded-mtext">Send Email</span>
+</a>
+</li>
+
 
 
 

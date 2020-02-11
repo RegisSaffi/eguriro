@@ -294,7 +294,7 @@ if(isset($_GET['p'])){
                     </div>
                     <p class="price"><span>$<span id="price"><?php echo $row['price']   ?></span></span></p>
 
-                    <?php echo $row['product_description']   ?>
+                    <?php echo $row['short_description']   ?>
                     <div class="row mt-4">
 
                         <div class="w-100"></div>

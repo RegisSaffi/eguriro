@@ -136,7 +136,7 @@ include('includes/header.php');
                                     <td class="total">$<?php echo $row["total_price"] ?></td>
                                     <td class="total"><?php echo $row['order_note'];?> </td>
                                     <td class="total"> </td>
-                                    <td class="total"><?php echo $row["order_status"] ?></td>
+                                    <td class="total" style="color: #57C038"><?php echo $row["order_status"] ?></td>
                                 </tr>
 
                                 <?php
@@ -176,7 +176,7 @@ include('includes/header.php');
                                     <td class="total">$<?php echo $row["total_price"] ?></td>
                                     <td class="total"><?php echo $row['order_note'];?> </td>
                                     <td class="total"> <?php if($row['order_payment']=='cash'){ echo "Office location KN 87st,Beatitude house ,Second floor ,Door 13,phone : 0781816180"; } else if($row['order_payment']=='momo'){ echo " you can pay on our momo account 0781816180 TUYIZERE Eyse"; } else if($row['order_payment']=='bank'){ echo "you can pay on our Equity bank A/C : 4002100384793 TUYIZERE Eyse"; }?> </td>
-                                    <td class="total"><?php echo $row["order_status"] ?></td>
+                                    <td class="total" style="color: #57C038"><?php echo $row["order_status"] ?></td>
                                 </tr>
 
                                 <?php

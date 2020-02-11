@@ -30,6 +30,8 @@
         var selected="";
         var ship_cost="";
         var weight=0;
+
+        var quantity=0;
         var total_price=0;
         $("#cost").hide()
         $("#location").hide()
@@ -122,18 +124,43 @@ $('#od').click(function(){
 var product=$("#product").val();
 $("#message").html("<img src='icons/loading.gif' width='50px' height='50px'/>");
 
+$('.modal-body').html("Are you sure do you want to buy this product?");
 
+if(outside==="yes"){
+    quantity=$("#quantity").val();
+}else if(outside==="no"){
+    quantity=$("#weight").val();
+}
 
-var quantity=$("#weight").val();
+var payment= $("input[name='payment']:checked").val();
+
 $.ajax
 ({ 
 url: 'php/add_order.php',
-data: {"weight":quantity,"total_price":total_price,"product":product},
+data: {"weight":quantity,"total_price":total_price,"product":product,"payment":payment},
 type: 'post',
 success: function(result)
 {
+
+    // $('.modal-body').html(message);
     $('#successModal').modal('hide');
-    $("#message").html(result)  
+    // $("#message").html(result) 
+
+                       $('#loginModal').modal('show');
+
+                        if(payment==="momo"){
+                            var message="Thank you , your order has been Received, you have selected paying via mobile money, here is our momo account 0781816180 TUYIZERE Eyse";
+                            $('.modal-body').html(message);
+                        } else if(payment==="bank"){
+                            
+                            var message="Thank you , your order has been Received, you have selected paying via mobile money, here is  our Equity bank A/C : 4002100384793 TUYIZERE Eyse";
+                            $('.modal-body').html(message);
+                        }else if(payment==="cash"){
+                            var message="Thank you , your order has been Received, you have selected paying via mobile money, here is address <br/> OFFICE LOCATION KN 87st <br/>Beatitude house <br/>Second floor <br/>Door 13<br/>phone : 0781816180";
+                            $('.modal-body').html(message);
+                        }
+
+     
 }
 });
 
@@ -240,9 +267,26 @@ include('includes/header.php');
                         </div>
                         <div class="row"></div>
                         <div id="info"   class="row" style="display: none;">
-                        <!-- <div class="col-md-12"><input type="number"  class="form-control" name="quantity" id="quantity" placeholder="Quantity"/></div>
-                        <div class="col-md-12"><input type="email" class="form-control"  name="email" id="email" placeholder="Email"/></div>
+                        <div class="col-md-12"><input type="number"  class="form-control" name="quantity" id="quantity" placeholder="Quantity"/></div>
+                        <!-- <div class="col-md-12"><input type="email" class="form-control"  name="email" id="email" placeholder="Email"/></div>
                         <div style="margin-top: 10px;" class="col-md-12"><input type="phone" class="form-control"  name="phone" id="phone" placeholder="Phone"/></div> -->
+                        <br>
+                        <div class="col-md-12">
+                        <div class="cart-total">
+                    <h3>Payment method</h3>
+                    <p class="d-flex total-price">
+                        <span>MOMO</span></td><td><span><input class="form-control" id="payment" type="radio" value="momo" name="payment"/></span>     
+                    </p>
+                     <p class="d-flex total-price">
+                            <span>Bank</span>
+                            <span><input class="form-control" type="radio" value="bank" id="payment" name="payment"/></span>
+                    </p>
+                     <p class="d-flex total-price">
+                            <span>Cash</span>
+                            <span><input class="form-control" type="radio" value="cash" id="payment" name="payment"/></span>
+                    </p>
+
+</div></div>
                         <div class="col-md-12" style="margin-bottom: 50px; margin-top:10px;" ><input type="button" id="order" value="Buy it Now" name="order" class="btn btn-primary py-3 px-5"></div>
                     </div>
 
@@ -285,6 +329,31 @@ include('includes/header.php');
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                    
                     <button type="button" id="od" class="btn btn-primary">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class=" modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Success
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    You must first login to make this order!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <a href="signin.php"><button type="button" id="buyProduct" class="btn btn-primary">Login</button></a>
                 </div>
             </div>
         </div>
