@@ -24,7 +24,14 @@ if(isset($_POST['id'])){
        $client=$_COOKIE["eguriro"];
     }
 
-    $id=$_POST['product'];
+    $id="000";
+
+    if(isset($_POST['id'])){
+      $id=$_POST['product'];
+    }else{
+      $id=$_POST['name'];
+    }
+    
      $quantity=$_POST['quantity'];
       $price=$_POST['price'];
        $name=$_POST['name'];

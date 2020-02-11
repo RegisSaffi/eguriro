@@ -40,12 +40,12 @@
 
             $("#loader").show();
             $("#buyProduct").hide("slow");
-            var payment= $("input[name='payment']:checked").val();
+            var payment = $("input[name='payment']:checked").val();
 
             console.log(payment);
             var data = {
                 "checkout": "checkout",
-                "payment" : payment
+                "payment": payment
             }
 
             $.ajax({
@@ -67,22 +67,25 @@
                     // notify(state.state, state.msg, state.state);
 
 
-                    if(state.state==='danger'){
+                    if (state.state === 'danger') {
                         $('#loginModal').modal('show');
                     }
 
                     if (state.state === 'success') {
 
-                        
-                        if(payment==="momo"){
-                            var message="Thank you for ordering on our platform. you can pay on our momo account 0781816180 TUYIZERE Eyse";
+
+                        if (payment === "momo") {
+                            var message =
+                                "Thank you for ordering on our platform. you can pay on our momo account 0781816180 TUYIZERE Eyse";
                             $('.modal-body').html(message);
-                        } else if(payment==="bank"){
-                            
-                            var message="Thank you for ordering on our platform. you can pay on our Equity bank A/C : 4002100384793 TUYIZERE Eyse";
+                        } else if (payment === "bank") {
+
+                            var message =
+                                "Thank you for ordering on our platform. you can pay on our Equity bank A/C : 4002100384793 TUYIZERE Eyse";
                             $('.modal-body').html(message);
-                        }else if(payment==="cash"){
-                            var message="Thank you for ordering on our platform.<br/> OFFICE LOCATION KN 87st <br/>Beatitude house <br/>Second floor <br/>Door 13<br/>phone : 0781816180";
+                        } else if (payment === "cash") {
+                            var message =
+                                "Thank you for ordering on our platform.<br/> OFFICE LOCATION KN 87st <br/>Beatitude house <br/>Second floor <br/>Door 13<br/>phone : 0781816180";
                             $('.modal-body').html(message);
                         }
 
@@ -184,6 +187,8 @@ if(isset($_GET['id'])){
                     $total=$total+$row["total_price"];
                     $count++;
                     $id=$row['product_id'];
+
+                    
                     $queryImg=mysqli_query($conn,"SELECT product_image FROM product_images WHERE product_id='$id'");
                     $rowImg=mysqli_fetch_assoc($queryImg);
             ?>
@@ -195,8 +200,11 @@ if(isset($_GET['id'])){
                                             style="background-image:url(<?php echo $rowImg["product_image"] ?>);"></div>
                                     </td>
                                     <td class="product-name">
-                                        <a
-                                            href="product-single.php?p=<?php echo str_replace(' ','-',$row['product_name'])?>">
+                                        <a href="<?php if(substr( $row['product_name'], 0, 4 ) === "http"){
+                                                echo $row['product_name'];
+                                             }else{
+                                              "product-single.php?p=".str_replace(' ','-',$row['product_name']);
+                                             }?>">
                                             <h3><?php echo $row["product_name"] ?></h3>
                                         </a>
 
@@ -255,26 +263,30 @@ if(isset($_GET['id'])){
                         </p>
                     </div>
                     <div class="cart-total mb-3">
-                    <h3>Payment method</h3>
-                    <p class="d-flex total-price">
-                        <span>MOMO</span></td><td><span><input class="form-control" id="payment" type="radio" value="momo" name="payment"/></span>     
-                    </p>
-                     <p class="d-flex total-price">
+                        <h3>Payment method</h3>
+                        <p class="d-flex total-price">
+                            <span>MOMO</span></td>
+                            <td><span><input class="form-control" id="payment" type="radio" value="momo"
+                                        name="payment" /></span>
+                        </p>
+                        <p class="d-flex total-price">
                             <span>Bank</span>
-                            <span><input class="form-control" type="radio" value="bank" id="payment" name="payment"/></span>
-                    </p>
-                     <p class="d-flex total-price">
+                            <span><input class="form-control" type="radio" value="bank" id="payment"
+                                    name="payment" /></span>
+                        </p>
+                        <p class="d-flex total-price">
                             <span>Cash</span>
-                            <span><input class="form-control" type="radio" value="cash" id="payment" name="payment"/></span>
-                    </p>
+                            <span><input class="form-control" type="radio" value="cash" id="payment"
+                                    name="payment" /></span>
+                        </p>
 
-</div>
+                    </div>
 
                     <p class="text-center"><a href="#" data-toggle="modal" data-target="#checkoutModal"
                             class="btn btn-primary py-3 px-4">Place your
                             order</a>
                     </p>
-                
+
 
                 </div>
             </div>
@@ -309,7 +321,8 @@ if(isset($_GET['id'])){
                             <span class="sr-only">Logging in...</span>
                         </div>
                     </div>
-                    <a href="#"><button type="button" id="buyProduct" class="btn btn-primary">Comfirm & order</button></a>
+                    <a href="#"><button type="button" id="buyProduct" class="btn btn-primary">Comfirm &
+                            order</button></a>
                 </div>
             </div>
         </div>
@@ -317,7 +330,7 @@ if(isset($_GET['id'])){
 
 
 
-        <div class=" modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class=" modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -329,11 +342,11 @@ if(isset($_GET['id'])){
                     </button>
                 </div>
                 <div class="modal-body" style="color: #000;">
-                    
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                   
+
                     <a href="orders.php"><button type="button" class="btn btn-primary">View orders</button></a>
                 </div>
             </div>
@@ -342,7 +355,7 @@ if(isset($_GET['id'])){
 
 
 
-<div class=" modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class=" modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -358,7 +371,8 @@ if(isset($_GET['id'])){
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <a href="signin.php"><button type="button" id="buyProduct" class="btn btn-primary">Login</button></a>
+                    <a href="signin.php"><button type="button" id="buyProduct"
+                            class="btn btn-primary">Login</button></a>
                 </div>
             </div>
         </div>

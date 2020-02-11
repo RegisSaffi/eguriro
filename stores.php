@@ -98,6 +98,18 @@ include('includes/header.php');
                         </div>
                     </div>
                 </div>
+
+                <div class="col-lg-2 text-center d-flex align-self-stretch ftco-animate">
+                    <div class="media block-6 services p-4 py-md-5">
+
+                        <div class="media-body">
+                            <div>
+                                <a href="http://alibaba.com"> <img class="zoom" src="images/icons/alibaba.png"
+                                        style="height:120px;width:120px; border-radius:25px;" /></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-lg-2 text-center d-flex align-self-stretch ftco-animate">
                     <div class="media block-6 services p-4 py-md-5">
 
@@ -121,6 +133,8 @@ include('includes/header.php');
                         </div>
                     </div>
                 </div>
+
+
             </div>
         </div>
     </section>
@@ -128,7 +142,7 @@ include('includes/header.php');
 
 
 
-    
+
     <?php
 
 include('includes/footer.php');

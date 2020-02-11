@@ -22,15 +22,20 @@
     <link rel="stylesheet" href="css/style.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/css/bootstrap-notify.css">
+    <link>
 
     <script>
     $(document).ready(function() {
 
-        var outside="";
-        var selected="";
-        var ship_cost="";
-        var weight=0;
-        var total_price=0;
+        var outside = "";
+        var selected = "";
+        var ship_cost = "";
+        var weight = 0;
+
+        var quantity = 0;
+        var total_price = 0;
         $("#cost").hide()
         $("#location").hide()
 
@@ -40,8 +45,8 @@
         $("#yes").click(function() {
             $("#location").hide()
             $("#cost").slideDown("slow")
-            outside="yes"
-            selected="rwanda";
+            outside = "yes"
+            selected = "rwanda";
             $("#convert").hide()
             $("#contact").hide()
         })
@@ -49,7 +54,7 @@
         $("#no").click(function() {
             $("#cost").hide()
             $("#location").slideDown("slow")
-            outside="no"
+            outside = "no"
         })
 
         $("#select").change(function() {
@@ -59,7 +64,7 @@
 
                 $("#contact").hide()
                 $("#convert").slideDown("slow")
-            } else if (selected==="UK") {
+            } else if (selected === "UK") {
                 $("#convert").hide()
                 $("#contact").slideDown("slow")
             } else {
@@ -68,81 +73,188 @@
             }
         });
 
-$('#calculate').click(function(){
+        $('#calculate').click(function() {
 
 
-    $("#info").css("display","block");
-    if(outside==="yes"){
-        ship_cost=$("#ship_cost").val();
-    }
+            $("#info").css("display", "block");
+            if (outside === "yes") {
+                ship_cost = $("#ship_cost").val();
+            }
 
-    if(selected === "United states"){
-        weight=$("#weight").val();
-    }
+            if (selected === "United states") {
+                weight = $("#weight").val();
+            }
 
-var price=$("#price").val();
-$("#message").html("<img src='icons/loading.gif' width='50px' height='50px'/>")
-$.ajax
-({ 
-    url: 'php/calculate.php',
-    data: {"country": selected,"price":price,"ship_cost":ship_cost,"weight":weight},
-    type: 'post',
-    success: function(result)
-    {
-        total_price=result;
-        $("#message").text("Total price is "+result)
-    }
-});
-});
-
-
-
-$('#order').click(function(){
-var product=$("#product").val();
-$("#message").html("<img src='icons/loading.gif' width='50px' height='50px'/>");
-
-$('#successModal').modal('show');
-
-// var quantity=$("#weight").val();
-// $.ajax
-// ({ 
-// url: 'php/add_order.php',
-// data: {"weight":quantity,"total_price":total_price,"product":product},
-// type: 'post',
-// success: function(result)
-// {
-//     $("#message").html(result)  
-// }
-// });
-
-});
-
-
-$('#od').click(function(){
-var product=$("#product").val();
-$("#message").html("<img src='icons/loading.gif' width='50px' height='50px'/>");
+            var price = $("#price").val();
+            $("#message").html("<img src='icons/loading.gif' width='50px' height='50px'/>")
+            $.ajax({
+                url: 'php/calculate.php',
+                data: {
+                    "country": selected,
+                    "price": price,
+                    "ship_cost": ship_cost,
+                    "weight": weight
+                },
+                type: 'post',
+                success: function(result) {
+                    total_price = result;
+                    $("#message").text("Total price is " + result)
+                }
+            });
+        });
 
 
 
-var quantity=$("#weight").val();
-$.ajax
-({ 
-url: 'php/add_order.php',
-data: {"weight":quantity,"total_price":total_price,"product":product},
-type: 'post',
-success: function(result)
-{
-    $('#successModal').modal('hide');
-    $("#message").html(result)  
-}
-});
+        $('#order').click(function() {
+            var product = $("#product").val();
+            $("#message").html("<img src='icons/loading.gif' width='50px' height='50px'/>");
 
-});
-        // $("#calculate").onClick(function(){
+            $('#successModal').modal('show');
 
-        // });
+            // var quantity=$("#weight").val();
+            // $.ajax
+            // ({ 
+            // url: 'php/add_order.php',
+            // data: {"weight":quantity,"total_price":total_price,"product":product},
+            // type: 'post',
+            // success: function(result)
+            // {
+            //     $("#message").html(result)  
+            // }
+            // });
+
+        });
+
+
+        $('#od').click(function() {
+            var product = $("#product").val();
+            $("#message").html("<img src='icons/loading.gif' width='50px' height='50px'/>");
+
+            $('.modal-body').html("Are you sure do you want to buy this product?");
+
+            if (outside === "yes") {
+                quantity = $("#quantity").val();
+            } else if (outside === "no") {
+                quantity = $("#weight").val();
+            }
+
+            var payment = $("input[name='payment']:checked").val();
+
+            $.ajax({
+                url: 'php/add_order.php',
+                data: {
+                    "weight": quantity,
+                    "total_price": total_price,
+                    "product": product,
+                    "payment": payment
+                },
+                type: 'post',
+                success: function(result) {
+
+                    // $('.modal-body').html(message);
+                    $('#successModal').modal('hide');
+                    // $("#message").html(result) 
+
+                    $('#loginModal').modal('show');
+
+                    if (payment === "momo") {
+                        var message =
+                            "Thank you , your order has been Received, you have selected paying via mobile money, here is our momo account 0781816180 TUYIZERE Eyse";
+                        $('.modal-body').html(message);
+                    } else if (payment === "bank") {
+
+                        var message =
+                            "Thank you , your order has been Received, you have selected paying via mobile money, here is  our Equity bank A/C : 4002100384793 TUYIZERE Eyse";
+                        $('.modal-body').html(message);
+                    } else if (payment === "cash") {
+                        var message =
+                            "Thank you , your order has been Received, you have selected paying via mobile money, here is address <br/> OFFICE LOCATION KN 87st <br/>Beatitude house <br/>Second floor <br/>Door 13<br/>phone : 0781816180";
+                        $('.modal-body').html(message);
+                    }
+
+
+                }
+            });
+
+        });
+
+        $("#loader").hide();
+        $("#addToCart").click(function() {
+
+            var product = $("#product").val();
+
+            var payment = $("input[name='payment']:checked").val();
+
+            if (outside === "yes") {
+                quantity = $("#quantity").val();
+            } else if (outside === "no") {
+                quantity = $("#weight").val();
+            }
+
+
+            if (quantity === '' || quantity == 0) {
+                notify("Warning", "Please specify product quantity", 'warning')
+            } else {
+
+                $("#loader").show();
+                $("#addToCart").hide("slow");
+
+                $.ajax({
+                    type: "POST",
+                    url: "php/add_cart.php",
+                    data: {
+                        "quantity": quantity,
+                        "price": total_price,
+                        "name": product,
+                        "cart": payment
+                    },
+                    cache: false,
+                    success: function(result) {
+
+                        $("#loader").hide("slow");
+                        $("#addToCart").show("slow");
+
+                        console.log(result)
+                        var state = JSON.parse(result)
+
+                        notify(state.state, state.msg, state.state);
+
+                        var c = $("#cart_counter").text()
+                        var c2 = parseInt(c)
+                        c2 += 1
+                        $("#cart_counter").html(c2)
+
+                        // console.log("state"+state.state);
+                    },
+                    error: function(er) {
+                        $("#loader").hide("slow");
+                        $("#addToCart").show("slow");
+                        notify("Danger", er, "danger");
+                    }
+                });
+
+            }
+
+        });
 
     });
+
+
+    function notify(t, st, tp) {
+        $.notify({
+            icon: 'fa fa-bell',
+            title: t + ", ",
+            message: st,
+            target: '_blank'
+        }, {
+            type: tp,
+            placement: {
+                from: "bottom",
+                align: "right"
+            },
+            time: 1000,
+        });
+    }
     </script>
 </head>
 
@@ -196,7 +308,7 @@ include('includes/header.php');
                                 <label>Ship to Rwanda?</label><br />
                                 <div class="btn-group" role="group" aria-label="Basic example">
 
-                                    <button type="button"  class="btn btn-secondary" id="yes">Yes</button>
+                                    <button type="button" class="btn btn-secondary" id="yes">Yes</button>
                                     <button type="button" class="btn btn-secondary" id="no">No</button>
 
                                 </div>
@@ -227,39 +339,72 @@ include('includes/header.php');
 
                                 <div class="form-group pt-2" id="contact">
                                     <span><b>Information</b></span><br />
-                                    <label>Package should not be above 0.8kg and size of  30cmx30cm x30cm</label>
+                                    <label>Package should not be above 0.8kg and size of 30cmx30cm x30cm</label>
                                 </div>
 
                                 <div class="form-group mt-2">
-                                    <input type="button" id="calculate" value="Calculate" name="calculate" class="btn btn-primary py-3 px-5">
+                                    <input type="button" id="calculate" value="Calculate" name="calculate"
+                                        class="btn btn-primary py-3 px-5">
                                 </div>
                                 <div class="form-group mt-2" style="color:red;font-size:25px;" id="message"></div>
-                                
+
                             </form>
-                            
+
                         </div>
                         <div class="row"></div>
-                        <div id="info"   class="row" style="display: none;">
-                        <!-- <div class="col-md-12"><input type="number"  class="form-control" name="quantity" id="quantity" placeholder="Quantity"/></div>
-                        <div class="col-md-12"><input type="email" class="form-control"  name="email" id="email" placeholder="Email"/></div>
+                        <div id="info" class="row" style="display: none;">
+                            <div class="col-md-12"><input type="number" class="form-control" name="quantity"
+                                    id="quantity" placeholder="Quantity" /></div>
+                            <!-- <div class="col-md-12"><input type="email" class="form-control"  name="email" id="email" placeholder="Email"/></div>
                         <div style="margin-top: 10px;" class="col-md-12"><input type="phone" class="form-control"  name="phone" id="phone" placeholder="Phone"/></div> -->
-                        <div class="col-md-12" style="margin-bottom: 50px; margin-top:10px;" ><input type="button" id="order" value="Buy it Now" name="order" class="btn btn-primary py-3 px-5"></div>
+                            <br>
+                            <div class="col-md-12">
+                                <div class="cart-total">
+                                    <h3>Payment method</h3>
+                                    <p class="d-flex total-price">
+                                        <span>MOMO</span></td>
+                                        <td><span><input class="form-control" id="payment" type="radio" value="momo"
+                                                    name="payment" /></span>
+                                    </p>
+                                    <p class="d-flex total-price">
+                                        <span>Bank</span>
+                                        <span><input class="form-control" type="radio" value="bank" id="payment"
+                                                name="payment" /></span>
+                                    </p>
+                                    <p class="d-flex total-price">
+                                        <span>Cash</span>
+                                        <span><input class="form-control" type="radio" value="cash" id="payment"
+                                                name="payment" /></span>
+                                    </p>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="margin-bottom: 50px; margin-top:10px;">
+                                <input type="button" id="order" value="Buy it Now" name="order"
+                                    class="btn btn-primary py-3 px-5 mt-1">
+
+                                <div class="spinner-border" role="status" id="loader">
+                                    <span class="sr-only">Logging in...</span>
+                                </div>
+                                <input type="btn btn-text" id="addToCart" value="Add to cart" name="cart"
+                                    class="btn btn-secondary py-3 px-5 mt-1">
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                        </div>
+
                     </div>
 
-                    <div class="row">
-                        
-                    </div>
-
-                    </div>
-                    
                 </div>
                 <div class="col-lg-3 text-center d-flex align-self-stretch ftco-animate">
                     <div class="media block-6 services p-4 py-md-5">
-                      
 
 
 
-                    
+
+
                     </div>
                 </div>
             </div>
@@ -267,7 +412,7 @@ include('includes/header.php');
     </section>
 
 
- <div class=" modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class=" modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -283,8 +428,34 @@ include('includes/header.php');
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                   
+
                     <button type="button" id="od" class="btn btn-primary">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class=" modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Success
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    You must first login to make this order!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <a href="signin.php"><button type="button" id="buyProduct"
+                            class="btn btn-primary">Login</button></a>
                 </div>
             </div>
         </div>
@@ -302,7 +473,6 @@ include('includes/footer.php');
                 stroke="#F96D00" /></svg></div>
 
 
-    <script src="js/jquery.min.js" type="0655eb557a52ebd004c94297-text/javascript"></script>
     <script src="js/jquery-migrate-3.0.1.min.js" type="0655eb557a52ebd004c94297-text/javascript"></script>
     <script src="js/popper.min.js" type="0655eb557a52ebd004c94297-text/javascript"></script>
     <script src="js/bootstrap.min.js" type="0655eb557a52ebd004c94297-text/javascript"></script>
@@ -319,6 +489,8 @@ include('includes/footer.php');
         type="0655eb557a52ebd004c94297-text/javascript"></script>
     <script src="js/google-map.js" type="0655eb557a52ebd004c94297-text/javascript"></script>
     <script src="js/main.js" type="0655eb557a52ebd004c94297-text/javascript"></script>
+
+    <script src="js/bootstrap-notify/bootstrap-notify.min.js"></script>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"
         type="0655eb557a52ebd004c94297-text/javascript"></script>

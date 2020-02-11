@@ -22,7 +22,8 @@ include("php/connect.php");
                
 ?>
 
-<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" style="color:#fff;" id="ftco-navbar">
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" style="color:#fff;"
+    id="ftco-navbar">
     <div class="container">
         <a class="navbar-brand" href="index.php">
             <img src='icons/logo.png' style="height:40px; margin-top:10px;" />
@@ -60,10 +61,9 @@ include("php/connect.php");
                         <?php  
                                          }else{
                                          ?>
-                       
+
                         <a class="dropdown-item" href="orders.php">Orders</a>
-                        <a class="dropdown-item" href="#" data-toggle="modal"
-                            data-target="#exampleModal">Logout</a>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModal">Logout</a>
 
                         <?php  
                          }
@@ -72,9 +72,8 @@ include("php/connect.php");
                     </div>
                 </li>
 
-
                 <li class="nav-item cta cta-colored"><a style="color: #fff;" href="cart.php" class="nav-link"><span
-                            class="icon-shopping_cart" ></span>[<?php echo $count ?>]</a></li>
+                            class="icon-shopping_cart"></span>[<b id="cart_counter"><?php echo $count ?></b>]</a></li>
 
             </ul>
 

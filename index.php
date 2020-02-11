@@ -1,7 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
-    
+
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 
 <head>
@@ -34,7 +33,7 @@
     <style>
     .zoom:hover {
         transform: scale(1.3);
-       
+
     }
     </style>
 
@@ -149,6 +148,11 @@
 
                         notify(state.state, state.msg, state.state);
 
+                        var c = $("#cart_counter").text()
+                        var c2 = parseInt(c)
+                        c2 += 1
+                        $("#cart_counter").html(c2)
+
                         $('#cartModal').modal('hide')
 
                     },
@@ -195,24 +199,21 @@ include('includes/header.php');
 
 
 
-    <section id="home-section" class="hero" style="overflow:auto;">
-        <div class="home-slider owl-carousel " style="overflow:auto;">
-            <div class="slider-item js-fullheight" style="-webkit-transition: 0.30s ease-in-out left;
-    -moz-transition: 0.30s ease-in-out left;
-    -o-transition: 0.30s ease-in-out left;
-    transition: 0.30s ease-in-out left;">
+    <section id="home-section" class="hero">
+        <div class="home-slider owl-carousel ">
+            <div class="slider-item js-fullheight">
                 <div class="container-fluid p-0">
                     <div class="row d-md-flex no-gutters slider-text align-items-center justify-content-end"
-                        data-scrollax-parent="true" style="overflow:auto;">
+                        data-scrollax-parent="true" style="overflow:hidden;">
                         <img class="one-third order-md-last img-fluid" src="images/parcel.png" alt="">
-                        <div class="one-forth d-flex align-items-center ftco-animate"
-                            data-scrollax=" properties: { translateY: '70%' }" >
+                        <div class="one-forth d-flex align-items-center">
                             <div class="text">
                                 <!-- <span class="subheading">#have something in the USA?</span> -->
                                 <div class="horizontal">
                                     <h1 style="color: #fff;" class="mb-4 mt-3">Have something in the USA?</h1>
-                                    <p style="color: #fff;" class="mb-4">Send your items to our office in the US  and it'll be brought to you in Kigali in a short matter of time.</p>
-                                     <p><a href="shipfromusa.php" class="btn-custom">Ship from USA</a></p>
+                                    <p style="color: #fff;" class="mb-4">Send your items to our office in the US and
+                                        it'll be brought to you in Kigali in a short matter of time.</p>
+                                    <p><a href="shipfromusa.php" class="btn-custom">Ship from USA</a></p>
                                 </div>
                             </div>
                         </div>
@@ -222,15 +223,16 @@ include('includes/header.php');
             <div class="slider-item js-fullheight">
                 <div class="container-fluid p-0">
                     <div class="row d-flex no-gutters slider-text align-items-center justify-content-end"
-                        data-scrollax-parent="true" overflow:auto;>
+                        data-scrollax-parent="true" style="overflow:hidden;">
                         <img class="one-third order-md-last img-fluid" src="images/pro.png" alt="">
-                        <div class="one-forth d-flex align-items-center ftco-animate"
-                            data-scrollax=" properties: { translateY: '70%' }" style="">
+                        <div class="one-forth d-flex align-items-center">
                             <div class="text">
                                 <!-- <span class="subheading">#Shop online with us</span> -->
                                 <div class="horizontal">
                                     <h1 style="color: #fff;" class="mb-4 mt-3">Shop online with us</h1>
-                                    <p style="color: #fff;" class="mb-4">Shop and own any item from global online markets and we'll get it shipped in Kigali for you. click the button below to see how much you will pay.</p>
+                                    <p style="color: #fff;" class="mb-4">Shop and own any item from global online
+                                        markets and we'll get it shipped in Kigali for you. click the button below to
+                                        see how much you will pay.</p>
                                     <p><a href="calculator.php" class="btn-custom">Price calculator</a></p>
                                 </div>
                             </div>
@@ -247,7 +249,7 @@ include('includes/header.php');
             <div class="container">
                 <div class="row justify-content-center mb-3 pb-3">
                     <div class="col-md-12 heading-section text-center ftco-animate">
-                        <h2  class="mb-4">Our solution</h2>
+                        <h2 class="mb-4">Our solution</h2>
                         <p>eGuriro is for everyone who want to shop online</p>
                     </div>
                 </div>
@@ -457,7 +459,6 @@ include('includes/header.php');
                     <div class="media block-6 services p-4 py-md-5">
 
                         <div class="media-body">
-
                             <div>
                                 <a href="http://amazon.com"><img class="zoom" src="images/icons/amazon.png"
                                         style="height:120px;width:120px; border-radius:25px;" /></a>
@@ -494,6 +495,17 @@ include('includes/header.php');
                         <div class="media-body">
                             <div>
                                 <a href="http://gearbest.com"> <img class="zoom" src="images/icons/gearbest.jpg"
+                                        style="height:120px;width:120px; border-radius:25px;" /></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 text-center d-flex align-self-stretch ftco-animate">
+                    <div class="media block-6 services p-4 py-md-5">
+
+                        <div class="media-body">
+                            <div>
+                                <a href="http://alibaba.com"> <img class="zoom" src="images/icons/alibaba.png"
                                         style="height:120px;width:120px; border-radius:25px;" /></a>
                             </div>
                         </div>
@@ -606,8 +618,8 @@ include('includes/header.php');
                         <h2 class="mb-4">WHAT OUR CUSTOMERS SAY</h2>
                         <!-- <p>Safety, quality and professionalism in performance</p> -->
                     </div>
-                    <div class="carousel-testimony owl-carousel ftco-animate" >
-                        <div class="item" style="margin-top: 20px;" >
+                    <div class="carousel-testimony owl-carousel ftco-animate">
+                        <div class="item" style="margin-top: 20px;">
                             <div class="testimony-wrap">
                                 <!-- style="background-image: url(icons/avatar.jpg)" -->
                                 <!-- <div class="user-img mb-4" >
@@ -616,9 +628,9 @@ include('includes/header.php');
                                     </span>
                                 </div> -->
                                 <div class="text" ">
-                                    <p class="mb-4 pl-4 line">Mwantumirije ibikoresho bingeraho mu gihe nyacyo kandi
-                                        biza bifite quality nziza nashashakaga, Ibikoresho byaje bisa neza nibyo nari
-                                        nabasabye ngo mu ngurire, Ndabakunda</p>
+                                    <p class=" mb-4 pl-4 line">Mwantumirije ibikoresho bingeraho mu gihe nyacyo kandi
+                                    biza bifite quality nziza nashashakaga, Ibikoresho byaje bisa neza nibyo nari
+                                    nabasabye ngo mu ngurire, Ndabakunda</p>
                                     <p class="name">Munyemana Philbert</p>
                                     <span class="position">From Musanze</span>
                                 </div>
@@ -626,7 +638,7 @@ include('includes/header.php');
                         </div>
                         <div class="item">
                             <div class="testimony-wrap">
-                               <!--  <div class="user-img mb-4" style="background-image: url(icons/avatar.jpg)">
+                                <!--  <div class="user-img mb-4" style="background-image: url(icons/avatar.jpg)">
                                     <span class="quote d-flex align-items-center justify-content-center">
                                         <i class="icon-quote-left"></i>
                                     </span>
@@ -643,13 +655,14 @@ include('includes/header.php');
                         </div>
                         <div class="item">
                             <div class="testimony-wrap">
-                             <!--    <div class="user-img mb-4" style="background-image: url(icons/avatar.jpg)">
+                                <!--    <div class="user-img mb-4" style="background-image: url(icons/avatar.jpg)">
                                     <span class="quote d-flex align-items-center justify-content-center">
                                         <i class="icon-quote-left"></i>
                                     </span>
                                 </div> -->
                                 <div class="text">
-                                    <p class="mb-4 pl-4 line">Hi, Thanks for your service i received my Google pixel xl in few days with out any problem and it’s of good quality thx again.</p>
+                                    <p class="mb-4 pl-4 line">Hi, Thanks for your service i received my Google pixel xl
+                                        in few days with out any problem and it’s of good quality thx again.</p>
                                     <p class="name">Nkuranga Moris</p>
                                     <span class="position">From Kigali</span>
                                 </div>
