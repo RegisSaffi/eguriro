@@ -22,6 +22,12 @@
 <link rel="stylesheet" type="text/css" href="files/assets/icon/feather/css/feather.css">
 
 <link rel="stylesheet" type="text/css" href="files/assets/css/style.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.css" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.js"></script>
+
 </head>
 <body>
 
@@ -66,15 +72,25 @@
     $price=$_POST['price'];
     $description=mysqli_real_escape_string($conn,$_POST['description']);
     $link=$_POST['link'];
+    $short_description=$_POST['short_description'];
 
   $target_dir = "images/";
 $target_file1 = $target_dir . basename($_FILES["image1"]["name"]);
 $target_file2 = $target_dir . basename($_FILES["image2"]["name"]);
 $target_file3 = $target_dir . basename($_FILES["image3"]["name"]);
+
+$target_file4 = $target_dir . basename($_FILES["image4"]["name"]);
+$target_file5 = $target_dir . basename($_FILES["image5"]["name"]);
+$target_file6 = $target_dir . basename($_FILES["image6"]["name"]);
+
 $uploadOk = 1;
 $imageFileType1 = strtolower(pathinfo($target_file1,PATHINFO_EXTENSION));
 $imageFileType2 = strtolower(pathinfo($target_file2,PATHINFO_EXTENSION));
 $imageFileType3= strtolower(pathinfo($target_file3,PATHINFO_EXTENSION));
+
+$imageFileType4 = strtolower(pathinfo($target_file4,PATHINFO_EXTENSION));
+$imageFileType5 = strtolower(pathinfo($target_file5,PATHINFO_EXTENSION));
+$imageFileType6= strtolower(pathinfo($target_file6,PATHINFO_EXTENSION));
 
 
     $check1 = getimagesize($_FILES["image1"]["tmp_name"]);
@@ -134,14 +150,23 @@ if ($uploadOk == 0) {
     $target_file2 = $target_dir . basename($_FILES["image2"]["name"]);
     $target_file3 = $target_dir . basename($_FILES["image3"]["name"]);
 
+    $target_file4 = $target_dir . basename($_FILES["image4"]["name"]);
+    $target_file5 = $target_dir . basename($_FILES["image5"]["name"]);
+    $target_file6 = $target_dir . basename($_FILES["image6"]["name"]);
+
+
     $target_dir1 = "images/";
     $target_file11 = $target_dir1 . basename($_FILES["image1"]["name"]);
     $target_file22 = $target_dir1 . basename($_FILES["image2"]["name"]);
     $target_file33 = $target_dir1 . basename($_FILES["image3"]["name"]);
 
+    $target_file44 = $target_dir1 . basename($_FILES["image4"]["name"]);
+    $target_file55 = $target_dir1 . basename($_FILES["image5"]["name"]);
+    $target_file66 = $target_dir1 . basename($_FILES["image6"]["name"]);
 
-  if (move_uploaded_file($_FILES["image1"]["tmp_name"], $target_file1) && move_uploaded_file($_FILES["image2"]["tmp_name"],$target_file2) && move_uploaded_file($_FILES["image3"]["tmp_name"], $target_file3 )) {
-    $insert=mysqli_query($conn,"INSERT INTO `products`(`product_id`, `product_name`, `quantity`, `product_description`, `price`,`product_link`) VALUES (null,'$name','$quantity','$description','$price','$link')");
+
+  if (move_uploaded_file($_FILES["image1"]["tmp_name"], $target_file1) && move_uploaded_file($_FILES["image2"]["tmp_name"],$target_file2) && move_uploaded_file($_FILES["image3"]["tmp_name"], $target_file3 )  && move_uploaded_file($_FILES["image4"]["tmp_name"], $target_file4 )  && move_uploaded_file($_FILES["image5"]["tmp_name"], $target_file5 )  && move_uploaded_file($_FILES["image6"]["tmp_name"], $target_file6 )) {
+    $insert=mysqli_query($conn,"INSERT INTO `products`(`product_id`, `product_name`, `quantity`, `product_description`, `price`,`product_link`,`short_description`) VALUES (null,'$name','$quantity','$description','$price','$link','$short_description')");
     if($insert==true){
       $id=mysqli_insert_id($conn);
       $insert_image1=mysqli_query($conn,"INSERT INTO `product_images`(`product_image_id`, `product_image`, `product_id`) 
@@ -151,7 +176,14 @@ if ($uploadOk == 0) {
       $insert_image3=mysqli_query($conn,"INSERT INTO `product_images`(`product_image_id`, `product_image`, `product_id`) 
       VALUES (null,'$target_file33','$id')");
 
-      if($insert_image1==true && $insert_image2==true && $insert_image3==true){
+$insert_image4=mysqli_query($conn,"INSERT INTO `product_images`(`product_image_id`, `product_image`, `product_id`) 
+VALUES (null,'$target_file44','$id')");
+$insert_image5=mysqli_query($conn,"INSERT INTO `product_images`(`product_image_id`, `product_image`, `product_id`) 
+VALUES (null,'$target_file55','$id')");
+$insert_image6=mysqli_query($conn,"INSERT INTO `product_images`(`product_image_id`, `product_image`, `product_id`) 
+VALUES (null,'$target_file66','$id')");
+
+      if($insert_image1==true && $insert_image2==true && $insert_image3==true&& $insert_image4==true&& $insert_image5==true&& $insert_image6==true){
         echo "<font color='green'>Product saved successful!</font>";
       }
 
@@ -208,6 +240,41 @@ if ($uploadOk == 0) {
 </div>
 </div>
 
+
+
+<div class="form-group row">
+<label class="col-sm-2 col-form-label">Product image 4</label>
+<div class="col-sm-10">
+<input type="file" class="form-control" id="product image" name="image4" required>
+ <span class="messages"></span>
+</div>
+</div>
+
+
+
+
+<div class="form-group row">
+<label class="col-sm-2 col-form-label">Product image 5</label>
+<div class="col-sm-10">
+<input type="file" class="form-control" id="product image" name="image5" required>
+ <span class="messages"></span>
+</div>
+</div>
+
+
+
+
+<div class="form-group row">
+<label class="col-sm-2 col-form-label">Product image 6</label>
+<div class="col-sm-10">
+<input type="file" class="form-control" id="product image" name="image6" required>
+ <span class="messages"></span>
+</div>
+</div>
+
+
+
+
 <div class="form-group row">
 <label class="col-sm-2 col-form-label">Product price</label>
 <div class="col-sm-10">
@@ -219,20 +286,30 @@ if ($uploadOk == 0) {
 
 
 <div class="form-group row">
-<label class="col-sm-2 col-form-label">Description</label>
-<div class="col-sm-10">
-  <textarea cols="10" rows="5" class="form-control" placeholder="Description" name="description" required></textarea>
- <span class="messages"></span>
-</div>
-</div>
-
-<div class="form-group row">
 <label class="col-sm-2 col-form-label">Product link</label>
 <div class="col-sm-10">
 <input type="text" class="form-control" id="product link" name="link" placeholder="Product link" required>
  <span class="messages"></span>
 </div>
 </div>
+
+
+<div class="form-group row">
+<label class="col-sm-2 col-form-label">Short description</label>
+<div class="col-sm-10">
+<input type="text" class="form-control" id="short description" name="short_description" placeholder="Short description" required>
+ <span class="messages"></span>
+</div>
+</div>
+
+<div class="form-group row">
+<label class="col-sm-2 col-form-label">Description</label>
+<div class="col-sm-10">
+<textarea id="summernote" name="description"><?php echo $dis['product_description']; ?></textarea>
+ <span class="messages"></span>
+</div>
+</div>
+
 
 <div class="form-group row">
 <label class="col-sm-2"></label>
@@ -262,6 +339,15 @@ if ($uploadOk == 0) {
 </div>
 </div>
 
+<script>
+    $('#summernote').summernote({
+        placeholder: 'Write your news content here',
+        height: 200
+    });
+    </script>
+
+
+<script type="text/javascript" src="http://www.onlinestudies.ac/admin/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
 
 <script type="b8bb98f66259e62c0d3f52d3-text/javascript" src="files/bower_components/jquery/js/jquery.min.js"></script>
 <script type="b8bb98f66259e62c0d3f52d3-text/javascript" src="files/bower_components/jquery-ui/js/jquery-ui.min.js"></script>

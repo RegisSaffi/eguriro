@@ -4,11 +4,12 @@ if(isset($_POST['weight']) && isset($_POST['total_price'])){
     $weight=$_POST['weight'];
     $total_price=$_POST['total_price'];
     $product=$_POST['product'];
+    $payment=$_POST['payment'];
     if(isset($_COOKIE['eguriro'])){
         $oder_number=$number=mt_rand();
         $client=$_COOKIE["eguriro"];
-        $insert=mysqli_query($conn,"INSERT INTO `out_orders`(`out_order_id`, `product_link`, `created_date`, `client_id`, `quantity`, `total_price`, `order_status`, `order_number`) 
-        VALUES (null,'$product',NOW(),'$client','$weight','$total_price','pending','$oder_number')");
+        $insert=mysqli_query($conn,"INSERT INTO `out_orders`(`out_order_id`, `product_link`, `created_date`, `client_id`, `quantity`, `total_price`, `order_status`, `order_number`,`payment`) 
+        VALUES (null,'$product',NOW(),'$client','$weight','$total_price','pending','$oder_number','$payment')");
         if($insert==true){
             echo "<font color='green'>Ordered successfully</font>";
         }else{

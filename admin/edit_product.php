@@ -75,8 +75,15 @@ $dis=mysqli_fetch_array($select_client);
     require "connection.php";
     $quantity=$_POST['quantity'];
     $price=$_POST['price'];
+    $short_description=$_POST['short_description'];
     $description=mysqli_real_escape_string($conn,$_POST['description']);
-    $link=$_POST['link'];
+    $update=mysqli_query($conn,"update products set quantity='$quantity',price='$price',product_description='$description',short_description='$short_description' where product_id='$id'") or die(mysqli_error($conn));
+
+    if($update==true){
+        echo "<font color='green'>Product updated successfully</font>";
+    }else{
+        echo "<font color='red'>Sonething went wrong</font>";
+    }
   }
   ?>
 <form id="main" method="post" action="#"  enctype="multipart/form-data" >
@@ -104,7 +111,7 @@ $dis=mysqli_fetch_array($select_client);
 <div class="form-group row">
 <label class="col-sm-2 col-form-label"> Short Description</label>
 <div class="col-sm-10">
-    <input type="text" class="form-control" value="<?php echo $dis['short_description'];?>" name="short_description" required /> 
+    <input type="text" class="form-control"  value="<?php echo $dis['short_description'];?>" name="short_description" required /> 
  <span class="messages"></span>
 </div>
 </div>
@@ -112,7 +119,7 @@ $dis=mysqli_fetch_array($select_client);
 <div class="form-group row">
 <label class="col-sm-2 col-form-label">Description</label>
 <div class="col-sm-10">
-<textarea id="summernote" name="editordata"><?php echo $dis['product_description']; ?></textarea>
+<textarea id="summernote" name="description"><?php echo $dis['product_description']; ?></textarea>
  <span class="messages"></span>
 </div>
 </div>
@@ -122,7 +129,7 @@ $dis=mysqli_fetch_array($select_client);
 <div class="form-group row">
 <label class="col-sm-2"></label>
 <div class="col-sm-10">
-<button type="submit" name="save" class="btn btn-primary m-b-0">save</button>
+<button type="submit" name="save" class="btn btn-primary m-b-0">update</button>
 </div>
 </div>
 </form>

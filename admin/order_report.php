@@ -105,6 +105,33 @@ $update=mysqli_query($conn,"update orders set order_status='$status' where order
 <div class="card-header">
 <h5>Discount</h5></div>
 <div class="card-block">
+
+
+<form id="main" method="post" action="#"  enctype="multipart/form-data" >
+<div class="form-group row">
+<div class="col-sm-6">
+<input type="date" class="form-control" name="name" id="name" placeholder="Start date" required>
+<span class="messages"></span>
+</div>
+
+<div class="col-sm-6">
+<input type="date" class="form-control" name="name" id="name" placeholder="Emd date" required>
+<span class="messages"></span>
+</div>
+
+
+</div>
+
+<div class="form-group row">
+<label class="col-sm-6 col-form-label">Total amount</label>
+<div class="col-sm-6">
+<button type="submit" name="save" class="btn btn-primary m-b-0">view report</button>
+<span class="messages"></span>
+</div>
+</div>
+</form>
+
+
 <div class="dt-responsive table-responsive">
 <table id="order-table" class="table table-striped table-bordered nowrap">
 <thead>
