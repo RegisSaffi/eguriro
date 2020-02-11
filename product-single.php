@@ -70,9 +70,14 @@
                         console.log(result)
                         var state = JSON.parse(result)
 
-                        // notify(state.state, state.msg, state.state);
+                        notify(state.state, state.msg, state.state);
 
-                        if(state.state==='danger'){
+                        var c = $("#cart_counter").text()
+                        var c2 = parseInt(c)
+                        c2 += 1
+                        $("#cart_counter").html(c2)
+
+                        if (state.state === 'danger') {
                             $('#loginModal').modal('show');
                         }
                         // console.log("state"+state.state);
@@ -131,14 +136,14 @@
 
                         // notify(state.state, state.msg, state.state);
 
-                        
-                        if(state.state==='danger'){
+
+                        if (state.state === 'danger') {
                             $('#loginModal').modal('show');
                         }
 
                         if (state.state === 'success') {
 
-                            var message="Thank you for ordering on our platform.";
+                            var message = "Thank you for ordering on our platform.";
                             $('.modal-body').html(message);
                             $('#successModal').modal('show');
 
@@ -232,9 +237,10 @@ if(isset($_GET['p'])){
 
                  $queryImg=mysqli_query($conn,"SELECT product_image FROM product_images WHERE product_id='$id'");
                     $rowImg=mysqli_fetch_assoc($queryImg);
+    
+                     $oSql=mysqli_query($conn,"SELECT COUNT(product_id) AS counter FROM orders WHERE product_id='$id'");
+                     $oQuery=mysqli_fetch_array($oSql);
 
-                
-                
 
 ?>
 
@@ -255,6 +261,7 @@ if(isset($_GET['p'])){
                       while($rowImg2=mysqli_fetch_assoc($queryImg2)){
 
                         if(mysqli_num_rows($queryImg2)>1){
+
                         ?>
                         <div class="col">
                             <a href="<?php echo $rowImg2['product_image']   ?>" class="image-popup prod-img-bg"><img
@@ -276,20 +283,10 @@ if(isset($_GET['p'])){
                 <div class="col-lg-6 product-details pl-md-5 ftco-animate">
                     <h3><?php echo $row['product_name']  ?></h3>
                     <div class="rating d-flex">
-                        <p class="text-left mr-4">
-                            <a href="#" class="mr-2">0.0</a>
-                            <a href="#"><span class="ion-ios-star-outline"></span></a>
-                            <a href="#"><span class="ion-ios-star-outline"></span></a>
-                            <a href="#"><span class="ion-ios-star-outline"></span></a>
-                            <a href="#"><span class="ion-ios-star-outline"></span></a>
-                            <a href="#"><span class="ion-ios-star-outline"></span></a>
-                        </p>
-                        <p class="text-left mr-4">
-                            <a href="#" class="mr-2" style="color: #000;">00 <span
-                                    style="color: #bbb;">Rating</span></a>
-                        </p>
+
                         <p class="text-left">
-                            <a href="#" class="mr-2" style="color: #000;">1 <span style="color: #bbb;">Sold</span></a>
+                            <a href="#" class="mr-2" style="color: #000;"><?php echo $oQuery['counter']   ?> <span
+                                    style="color: #bbb;">Sold</span></a>
                         </p>
                     </div>
                     <p class="price"><span>$<span id="price"><?php echo $row['price']   ?></span></span></p>
@@ -345,7 +342,7 @@ if(isset($_GET['p'])){
                                 <p><?php echo $row['product_description']; ?></p>
                             </div>
                         </div>
-                      
+
                     </div>
                 </div>
             </div>
@@ -380,14 +377,15 @@ echo "The requested page is not available, back to home.";
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <a href="signin.php"><button type="button" id="buyProduct" class="btn btn-primary">Login</button></a>
+                    <a href="signin.php"><button type="button" id="buyProduct"
+                            class="btn btn-primary">Login</button></a>
                 </div>
             </div>
         </div>
     </div>
 
 
-<div class=" modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class=" modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -399,11 +397,11 @@ echo "The requested page is not available, back to home.";
                     </button>
                 </div>
                 <div class="modal-body" style="color: #000;">
-                    
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                   
+
                     <a href="orders.php"><button type="button" class="btn btn-primary">View orders</button></a>
                 </div>
             </div>

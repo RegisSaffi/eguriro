@@ -6,6 +6,7 @@ $serveraddress = "localhost";
 	$username = "root";
 	// $password =  "!eguriro";
 	$password =  "mysql";
+
 	$dbname =  "egurahkt_eguriro";
 
 	$conn = mysqli_connect($serveraddress, $username, $password, $dbname);
