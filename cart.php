@@ -74,18 +74,17 @@
                     if (state.state === 'success') {
 
 
-                        if (payment === "momo") {
-                            var message =
-                                "Thank you for ordering on our platform. you can pay on our momo account 0781816180 TUYIZERE Eyse";
+                        
+                        if(payment==="momo"){
+                            var message="Thank you , your order has been Received, you have selected paying via mobile money, here is our momo account 0781816180 TUYIZERE Eyse";
                             $('.modal-body').html(message);
-                        } else if (payment === "bank") {
+                        } else if(payment==="bank"){
+                            
+                            var message="Thank you , your order has been Received, you have selected paying via mobile money, here is our Equity bank A/C : 4002100384793 TUYIZERE Eyse";
+                            $('.modal-body').html(message);
+                        }else if(payment==="cash"){
+                            var message="Thank you , your order has been Received, you have selected paying via mobile money, here is our address<br/> OFFICE LOCATION KN 87st <br/>Beatitude house <br/>Second floor <br/>Door 13<br/>phone : 0781816180";
 
-                            var message =
-                                "Thank you for ordering on our platform. you can pay on our Equity bank A/C : 4002100384793 TUYIZERE Eyse";
-                            $('.modal-body').html(message);
-                        } else if (payment === "cash") {
-                            var message =
-                                "Thank you for ordering on our platform.<br/> OFFICE LOCATION KN 87st <br/>Beatitude house <br/>Second floor <br/>Door 13<br/>phone : 0781816180";
                             $('.modal-body').html(message);
                         }
 

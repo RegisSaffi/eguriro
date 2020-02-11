@@ -100,6 +100,7 @@
 <th>Price</th>
 <th>Quantity</th>
 <th>Description</th>
+<th>Action</th>
 </tr>
 </thead>
 <tbody>
@@ -117,6 +118,24 @@
             <td><?php echo $dis['price']; ?></td>
             <td><?php echo $dis['quantity']; ?></td>
             <td><?php echo $dis['product_description']; ?></td>
+            <td><div class="btn-group dropdown-split-inverse">
+<button type="button" class="btn btn-primary btn-small dropdown-toggle dropdown-toggle-split waves-effect waves-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+Action
+<span class="sr-only"></span>
+</button>
+<div class="dropdown-menu">
+<a class="dropdown-item waves-effect waves-light" href="edit_product.php?id=<?php echo $dis['product_id']; ?>">
+<button class="btn btn-success btn-mini">
+  Edit
+</button>
+</a>
+
+<div class="dropdown-divider"></div>
+
+
+</div>
+</div>
+</td>
         </tr>
     <?php
     }
