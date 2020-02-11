@@ -119,20 +119,19 @@ $update=mysqli_query($conn,"update orders set order_status='$status' where order
 <span class="messages"></span>
 </div>
 
-
 </div>
-<?php
+
+<div class="form-group row">
+<label class="col-sm-6 col-form-label"><?php
 if(isset($_POST['view'])){
   require "connection.php";
       $from=$_POST['from'];
       $to=$_POST['to'];
       $select=mysqli_query($conn,"select sum(total_price) as total from `orders` o inner join `clients` c on o.client_id=c.client_unique and  date(created_date) between '$from' and '$to'");
       $dis=mysqli_fetch_array($select);
-      echo $dis['total'];
+      echo "<font color='green'>".$dis['total']."FRW </font>";
 }
-?>
-<div class="form-group row">
-<label class="col-sm-6 col-form-label">Total amount</label>
+?></label>
 <div class="col-sm-6">
 <button type="submit" name="view" class="btn btn-primary m-b-0">view report</button>
 <span class="messages"></span>

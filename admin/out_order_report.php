@@ -1,8 +1,15 @@
+<?php
+if(isset($_GET['id'] ) && isset($_GET['status'])){
+require "connection.php";
+$status=$_GET['status'];
+$id=$_GET['id'];
+$update=mysqli_query($conn,"update out_orders set order_status='$status' where out_order_id='$id'") or die(mysqli_error($conn));
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
-
-<!-- Mirrored from colorlib.com//polygon/admindek/default/dt-data-sources.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 24 Dec 2019 13:24:07 GMT -->
-<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <head>
 <title>E-Guriro| Out order report</title>
 
@@ -131,28 +138,28 @@ Action
 <span class="sr-only"></span>
 </button>
 <div class="dropdown-menu">
-<a class="dropdown-item waves-effect waves-light" href="order_report.php?status=reviewing&id=<?php echo $dis['order_id']; ?>">
+<a class="dropdown-item waves-effect waves-light" href="order_report.php?status=reviewing&id=<?php echo $dis['out_order_id']; ?>">
 <button class="btn btn-success btn-mini">
   Reviewing
 </button>
 </a>
 
 <div class="dropdown-divider"></div>
-<a class="dropdown-item waves-effect waves-light" href="order_report.php?status=pay now&id=<?php echo $dis['order_id']; ?>">
+<a class="dropdown-item waves-effect waves-light" href="order_report.php?status=pay now&id=<?php echo $dis['out_order_id']; ?>">
 <button class="btn btn-danger btn-mini">
 Pay now
 </button>
 </a>
 
 <div class="dropdown-divider"></div>
-<a class="dropdown-item waves-effect waves-light" href="order_report.php?status=paid&id=<?php echo $dis['order_id']; ?>">
+<a class="dropdown-item waves-effect waves-light" href="order_report.php?status=paid&id=<?php echo $dis['out_order_id']; ?>">
 <button class="btn btn-info btn-mini">
 Paid
 </button>
 </a>
 
 <div class="dropdown-divider"></div>
-<a class="dropdown-item waves-effect waves-light" href="order_report.php?status=order placed&id=<?php echo $dis['order_id']; ?>">
+<a class="dropdown-item waves-effect waves-light" href="order_report.php?status=order placed&id=<?php echo $dis['out_order_id']; ?>">
 <button class="btn btn-primary btn-mini">
 Order placed
 </button>
