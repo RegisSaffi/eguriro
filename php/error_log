@@ -1,0 +1,4 @@
+[10-Feb-2020 15:35:03 America/New_York] PHP Notice:  Undefined index: payment in /home/egurahkt/public_html/test_eguriro/php/orders.php on line 50
+[11-Feb-2020 01:15:05 America/New_York] PHP Warning:  A non-numeric value encountered in /home/egurahkt/public_html/test_eguriro/php/calculate.php on line 11
+[11-Feb-2020 01:15:05 America/New_York] PHP Warning:  A non-numeric value encountered in /home/egurahkt/public_html/test_eguriro/php/calculate.php on line 13
+[11-Feb-2020 01:15:05 America/New_York] PHP Warning:  A non-numeric value encountered in /home/egurahkt/public_html/test_eguriro/php/calculate.php on line 13
