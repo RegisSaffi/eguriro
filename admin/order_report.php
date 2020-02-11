@@ -110,22 +110,31 @@ $update=mysqli_query($conn,"update orders set order_status='$status' where order
 <form id="main" method="post" action="#"  enctype="multipart/form-data" >
 <div class="form-group row">
 <div class="col-sm-6">
-<input type="date" class="form-control" name="name" id="name" placeholder="Start date" required>
+<input type="date" class="form-control" name="from" id="name" placeholder="Start date" required>
 <span class="messages"></span>
 </div>
 
 <div class="col-sm-6">
-<input type="date" class="form-control" name="name" id="name" placeholder="Emd date" required>
+<input type="date" class="form-control" name="to" id="name" placeholder="Emd date" required>
 <span class="messages"></span>
 </div>
 
 
 </div>
-
+<?php
+if(isset($_POST['view'])){
+  require "connection.php";
+      $from=$_POST['from'];
+      $to=$_POST['to'];
+      $select=mysqli_query($conn,"select sum(total_price) as total from `orders` o inner join `clients` c on o.client_id=c.client_unique and  date(created_date) between '$from' and '$to'");
+      $dis=mysqli_fetch_array($select);
+      echo $dis['total'];
+}
+?>
 <div class="form-group row">
 <label class="col-sm-6 col-form-label">Total amount</label>
 <div class="col-sm-6">
-<button type="submit" name="save" class="btn btn-primary m-b-0">view report</button>
+<button type="submit" name="view" class="btn btn-primary m-b-0">view report</button>
 <span class="messages"></span>
 </div>
 </div>
@@ -153,6 +162,63 @@ $update=mysqli_query($conn,"update orders set order_status='$status' where order
 <tfoot>
     <?php
     require "connection.php";
+    if(isset($_POST['view'])){
+      $from=$_POST['from'];
+      $to=$_POST['to'];
+      $select=mysqli_query($conn,"select * from `orders` o inner join `clients` c on o.client_id=c.client_unique and  date(created_date) between '$from' and '$to'");
+      while($dis=mysqli_fetch_array($select)){
+        ?>
+
+ <tr>
+            <td><?php echo $dis['client_fname']." ".$dis['client_lname']; ?></td>
+            <td><?php echo $dis['product_name']; ?></td>
+            <td><?php echo $dis['quantity']; ?></td>
+            <td><?php echo $dis['created_date']; ?></td>
+            <td><?php echo $dis['order_number']; ?></td>
+            <td><?php echo $dis['total_price']; ?></td>
+            <td><?php echo $dis['order_status']; ?></td>
+            <td>
+            <div class="btn-group dropdown-split-inverse">
+<button type="button" class="btn btn-primary btn-small dropdown-toggle dropdown-toggle-split waves-effect waves-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+Action
+<span class="sr-only"></span>
+</button>
+<div class="dropdown-menu">
+<a class="dropdown-item waves-effect waves-light" href="order_report.php?status=reviewing&id=<?php echo $dis['order_id']; ?>">
+<button class="btn btn-success btn-mini">
+  Reviewing
+</button>
+</a>
+
+<div class="dropdown-divider"></div>
+<a class="dropdown-item waves-effect waves-light" href="order_report.php?status=pay now&id=<?php echo $dis['order_id']; ?>">
+<button class="btn btn-danger btn-mini">
+Pay now
+</button>
+</a>
+
+<div class="dropdown-divider"></div>
+<a class="dropdown-item waves-effect waves-light" href="order_report.php?status=paid&id=<?php echo $dis['order_id']; ?>">
+<button class="btn btn-info btn-mini">
+Paid
+</button>
+</a>
+
+<div class="dropdown-divider"></div>
+<a class="dropdown-item waves-effect waves-light" href="order_report.php?status=order placed&id=<?php echo $dis['order_id']; ?>">
+<button class="btn btn-primary btn-mini">
+Order placed
+</button>
+</a>
+</div>
+</div>
+            </td>
+        </tr>
+        <?php
+      }
+    }else {
+
+ 
     $select=mysqli_query($conn,"select * from `orders` o inner join `clients` c on o.client_id=c.client_unique order by order_id desc");
     while($dis=mysqli_fetch_assoc($select)){
         ?>
@@ -203,6 +269,8 @@ Order placed
         </tr>
     <?php
     }
+
+  }
     ?>
 <tr>
 <th>Client name</th>
