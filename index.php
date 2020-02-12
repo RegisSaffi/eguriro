@@ -204,9 +204,9 @@ include('includes/header.php');
             <div class="slider-item js-fullheight">
                 <div class="container-fluid p-0">
                     <div class="row d-md-flex no-gutters slider-text align-items-center justify-content-end"
-                        data-scrollax-parent="true" style="overflow:hidden;">
+                        data-scrollax-parent="true" style="overflow:auto;">
                         <img class="one-third order-md-last img-fluid" src="images/parcel.png" alt="">
-                        <div class="one-forth d-flex align-items-center">
+                        <div class="one-forth">
                             <div class="text">
                                 <!-- <span class="subheading">#have something in the USA?</span> -->
                                 <div class="horizontal">
@@ -223,9 +223,9 @@ include('includes/header.php');
             <div class="slider-item js-fullheight">
                 <div class="container-fluid p-0">
                     <div class="row d-flex no-gutters slider-text align-items-center justify-content-end"
-                        data-scrollax-parent="true" style="overflow:hidden;">
+                        data-scrollax-parent="true" style="overflow:auto;">
                         <img class="one-third order-md-last img-fluid" src="images/pro.png" alt="">
-                        <div class="one-forth d-flex align-items-center">
+                        <div class="one-forth">
                             <div class="text">
                                 <!-- <span class="subheading">#Shop online with us</span> -->
                                 <div class="horizontal">
