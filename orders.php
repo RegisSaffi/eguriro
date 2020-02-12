@@ -146,7 +146,6 @@ include('includes/header.php');
                     $queryImg=mysqli_query($conn,"SELECT product_image FROM product_images WHERE product_id='$id'");
                     $rowImg=mysqli_fetch_assoc($queryImg);
                      ?>
-<<<<<<< HEAD
                                                     <tr class="text-start">
                                                         <td class="image-prod">
                                                             <div class="img"
@@ -178,33 +177,6 @@ include('includes/header.php');
                                                     </tr>
 
                                                     <?php
-=======
-                                <tr class="text-center">
-                                    <td class="image-prod">
-                                        <div class="img"
-                                            style="background-image:url(<?php echo $rowImg["product_image"] ?>);"></div>
-                                    </td>
-                                    <td class="product-name">
-                                        <a
-                                            href="<?php echo str_replace(' ','-',$row['product_link'])?>">
-                                            <h3><?php echo $row["product_link"] ?></h3>
-                                        </a>
-
-                                    </td>
-                                    <td class="price">$<?php echo $row["total_price"]; ?></td>
-                                    <td class="total">
-
-                                        <?php echo $row['quantity'] ?>
-
-                                    </td>
-                                    <td class="total">$<?php echo $row["total_price"] ?></td>
-                                    <td class="total"><?php echo $row['order_note'];?> </td>
-                                    <td class="total"> </td>
-                                    <td class="total" style="color: #57C038"><?php echo $row["order_status"] ?></td>
-                                </tr>
-
-                                <?php
->>>>>>> 5ca61e6dbc79ee2e9813885c510e65dbff4a1060
             }
                ?>
 
@@ -277,7 +249,6 @@ include('includes/header.php');
                     $queryImg=mysqli_query($conn,"SELECT product_image FROM product_images WHERE product_id='$id2'");
                     $rowImg=mysqli_fetch_assoc($queryImg);
                      ?>
-<<<<<<< HEAD
                                                     <tr class="text-start">
                                                         <td class="image-prod">
                                                             <div class="img"
@@ -309,38 +280,6 @@ include('includes/header.php');
                                                     <?php
                                               }
                                             ?>
-=======
-                                <tr class="text-center">
-                                    <td class="image-prod">
-                                        <div class="img"
-                                            style="background-image:url(<?php echo $rowImg["product_image"] ?>);"></div>
-                                    </td>
-                                    <td class="product-name">
-                                        <a
-                                            href="product-single.php?p=<?php echo str_replace(' ','-',$row['product_name'])?>">
-                                            <h3><?php echo $row["product_name"] ?></h3>
-                                        </a>
-
-                                    </td>
-                                    <td class="price">$<?php echo $row["total_price"]/$row["quantity"] ?></td>
-                                    <td class="total">
-
-                                        <?php echo $row['quantity'] ?>
-
-                                    </td>
-                                    <td class="total">$<?php echo $row["total_price"] ?></td>
-                                    <td class="total"><?php echo $row['order_note'];?> </td>
-                                    <td class="total"> <?php if($row['order_payment']=='cash'){ echo "Office location KN 87st,Beatitude house ,Second floor ,Door 13,phone : 0781816180"; } else if($row['order_payment']=='momo'){ echo " you can pay on our momo account 0781816180 TUYIZERE Eyse"; } else if($row['order_payment']=='bank'){ echo "you can pay on our Equity bank A/C : 4002100384793 TUYIZERE Eyse"; }?> </td>
-                                    <td class="total" style="color: #57C038"><?php echo $row["order_status"] ?></td>
-                                </tr>
-
-                                <?php
-            }
-               ?>
-               
-               
-               
->>>>>>> 5ca61e6dbc79ee2e9813885c510e65dbff4a1060
 
                                                 </tbody>
                                             </table>

@@ -5,7 +5,7 @@ $serveraddress = "localhost";
 	// $username = "egurahkt_eguriro";
 	$username = "root";
 	// $password =  "!eguriro";
-	$password =  "mysql";
+	$password =  "";
 
 	$dbname =  "egurahkt_eguriro";
 
