@@ -27,6 +27,17 @@
     <link>
 
     <script>
+
+var pay="";
+
+function setvalue(p=null){
+            pay=p;
+        }
+
+function toorder(){
+    window.location="orders.php";
+}
+
     $(document).ready(function() {
 
         var outside = "";
@@ -36,6 +47,12 @@
 
         var quantity = 0;
         var total_price = 0;
+
+        
+
+
+       
+
         $("#cost").hide()
         $("#location").hide()
 
@@ -109,7 +126,11 @@
             var product = $("#product").val();
             $("#message").html("<img src='icons/loading.gif' width='50px' height='50px'/>");
 
-            $('#successModal').modal('show');
+            // $('#successModal').modal('show');
+
+            $('#confirm').modal('show');
+
+            
 
             // var quantity=$("#weight").val();
             // $.ajax
@@ -138,7 +159,7 @@
                 quantity = $("#weight").val();
             }
 
-            var payment = $("input[name='payment']:checked").val();
+            // var payment = $("input[name='payment']:checked").val();
 
             $.ajax({
                 url: 'php/add_order.php',
@@ -146,31 +167,44 @@
                     "weight": quantity,
                     "total_price": total_price,
                     "product": product,
-                    "payment": payment
+                    "payment": pay
                 },
                 type: 'post',
                 success: function(result) {
+                    $('#confirm').modal('hide');
+                    $('#successModal').modal('hide');
+                    if(result==="login"){
+                        $('#notlogin').modal('show');
+                        $('#loginbody').html("Please login first, click below button to login");
+                    //    window.location.replace('signin.php');
+                    }else{
 
                     // $('.modal-body').html(message);
                     $('#successModal').modal('hide');
                     // $("#message").html(result) 
 
-                    $('#loginModal').modal('show');
+                   
 
-                    if (payment === "momo") {
+                    // alert(pay);
+
+                    if (pay === "momo") {
                         var message =
                             "Thank you , your order has been Received, you have selected paying via mobile money, here is our momo account 0781816180 TUYIZERE Eyse";
                         $('.modal-body').html(message);
-                    } else if (payment === "bank") {
+                    } else if (pay === "bank") {
 
                         var message =
                             "Thank you , your order has been Received, you have selected paying via mobile money, here is  our Equity bank A/C : 4002100384793 TUYIZERE Eyse";
                         $('.modal-body').html(message);
-                    } else if (payment === "cash") {
+                    } else if (pay === "cash") {
                         var message =
                             "Thank you , your order has been Received, you have selected paying via mobile money, here is address <br/> OFFICE LOCATION KN 87st <br/>Beatitude house <br/>Second floor <br/>Door 13<br/>phone : 0781816180";
                         $('.modal-body').html(message);
                     }
+
+                    $('#loginModal').modal('show');
+
+                }
 
 
                 }
@@ -358,7 +392,7 @@ include('includes/header.php');
                             <!-- <div class="col-md-12"><input type="email" class="form-control"  name="email" id="email" placeholder="Email"/></div>
                         <div style="margin-top: 10px;" class="col-md-12"><input type="phone" class="form-control"  name="phone" id="phone" placeholder="Phone"/></div> -->
                             <br>
-                            <div class="col-md-12">
+                            <!-- <div class="col-md-12">
                                 <div class="cart-total">
                                     <h3>Payment method</h3>
                                     <p class="d-flex total-price">
@@ -378,7 +412,7 @@ include('includes/header.php');
                                     </p>
 
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-12" style="margin-bottom: 50px; margin-top:10px;">
                                 <input type="button" id="order" value="Buy it Now" name="order"
                                     class="btn btn-primary py-3 px-5 mt-1">
@@ -429,7 +463,7 @@ include('includes/header.php');
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
-                    <button type="button" id="od" class="btn btn-primary">Yes</button>
+                    <button type="button"  class="btn btn-primary">Yes</button>
                 </div>
             </div>
         </div>
@@ -451,6 +485,76 @@ include('includes/header.php');
                 </div>
                 <div class="modal-body">
                     You must first login to make this order!
+                </div>
+                <div class="modal-footer">
+                    <button type="button"  onclick="toorder()" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class=" modal fade" id="confirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Select payment method
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure do you want to buy this product?  <br> If yes select payment
+                <div class="col-md-12">
+                    <form method="post">
+                                <div class="cart-total">
+                                    <h3>Payment method</h3>
+                                    <p class="d-flex total-price">
+                                        <span>MOMO</span></td>
+                                        <td><span><input class="form-control" id="payment" type="radio" value="momo"
+                                                    name="payment" onclick="setvalue('momo')" /></span>
+                                    </p>
+                                    <p class="d-flex total-price">
+                                        <span>Bank</span>
+                                        <span><input class="form-control" type="radio" value="bank" id="payment"
+                                                name="payment" onclick="setvalue('bank')"  /></span>
+                                    </p>
+                                    <p class="d-flex total-price">
+                                        <span>Cash</span>
+                                        <span><input class="form-control" type="radio" value="cash" id="payment"
+                                                name="payment"  onclick="setvalue('cash')" /></span>
+                                    </p>
+
+                                </div>
+
+                    </form>
+                </div>
+                
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="od" class="btn btn-primary">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class=" modal fade" id="notlogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Select payment method
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="loginbody">
+                    <p> Please login first, click below button to login </p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
