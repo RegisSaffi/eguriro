@@ -29,13 +29,15 @@
     <script>
     $(document).ready(function() {
 
-        var outside = "";
-        var selected = "";
-        var ship_cost = "";
-        var weight = 0;
 
-        var quantity = 0;
-        var total_price = 0;
+        var outside="";
+        var selected="";
+        var ship_cost="";
+        var weight=0;
+
+        var quantity=0;
+        var total_price=0;
+
         $("#cost").hide()
         $("#location").hide()
 
@@ -151,17 +153,46 @@
                 type: 'post',
                 success: function(result) {
 
-                    // $('.modal-body').html(message);
-                    $('#successModal').modal('hide');
-                    // $("#message").html(result) 
+$('.modal-body').html("Are you sure do you want to buy this product?");
 
-                    $('#loginModal').modal('show');
+if(outside==="yes"){
+    quantity=$("#quantity").val();
+}else if(outside==="no"){
+    quantity=$("#weight").val();
+}
 
-                    if (payment === "momo") {
-                        var message =
-                            "Thank you , your order has been Received, you have selected paying via mobile money, here is our momo account 0781816180 TUYIZERE Eyse";
-                        $('.modal-body').html(message);
-                    } else if (payment === "bank") {
+var payment= $("input[name='payment']:checked").val();
+
+$.ajax
+({ 
+url: 'php/add_order.php',
+data: {"weight":quantity,"total_price":total_price,"product":product,"payment":payment},
+type: 'post',
+success: function(result)
+{
+
+    // $('.modal-body').html(message);
+    $('#successModal').modal('hide');
+    // $("#message").html(result) 
+
+                       $('#loginModal').modal('show');
+
+                        if(payment==="momo"){
+                            var message="Thank you , your order has been Received, you have selected paying via mobile money, here is our momo account 0781816180 TUYIZERE Eyse";
+                            $('.modal-body').html(message);
+                        } else if(payment==="bank"){
+                            
+                            var message="Thank you , your order has been Received, you have selected paying via mobile money, here is  our Equity bank A/C : 4002100384793 TUYIZERE Eyse";
+                            $('.modal-body').html(message);
+                        }else if(payment==="cash"){
+                            var message="Thank you , your order has been Received, you have selected paying via mobile money, here is address <br/> OFFICE LOCATION KN 87st <br/>Beatitude house <br/>Second floor <br/>Door 13<br/>phone : 0781816180";
+                            $('.modal-body').html(message);
+                        }
+
+     
+}
+});
+
 
                         var message =
                             "Thank you , your order has been Received, you have selected paying via mobile money, here is  our Equity bank A/C : 4002100384793 TUYIZERE Eyse";
@@ -352,30 +383,31 @@ include('includes/header.php');
 
                         </div>
                         <div class="row"></div>
-                        <div id="info" class="row" style="display: none;">
-                            <div class="col-md-12"><input type="number" class="form-control" name="quantity"
-                                    id="quantity" placeholder="Quantity" /></div>
-                            <!-- <div class="col-md-12"><input type="email" class="form-control"  name="email" id="email" placeholder="Email"/></div>
+
+                        <div id="info"   class="row" style="display: none;">
+                        <div class="col-md-12"><input type="number"  class="form-control" name="quantity" id="quantity" placeholder="Quantity"/></div>
+                        <!-- <div class="col-md-12"><input type="email" class="form-control"  name="email" id="email" placeholder="Email"/></div>
                         <div style="margin-top: 10px;" class="col-md-12"><input type="phone" class="form-control"  name="phone" id="phone" placeholder="Phone"/></div> -->
-                            <br>
-                            <div class="col-md-12">
-                                <div class="cart-total">
-                                    <h3>Payment method</h3>
-                                    <p class="d-flex total-price">
-                                        <span>MOMO</span></td>
-                                        <td><span><input class="form-control" id="payment" type="radio" value="momo"
-                                                    name="payment" /></span>
-                                    </p>
-                                    <p class="d-flex total-price">
-                                        <span>Bank</span>
-                                        <span><input class="form-control" type="radio" value="bank" id="payment"
-                                                name="payment" /></span>
-                                    </p>
-                                    <p class="d-flex total-price">
-                                        <span>Cash</span>
-                                        <span><input class="form-control" type="radio" value="cash" id="payment"
-                                                name="payment" /></span>
-                                    </p>
+                        <br>
+                        <div class="col-md-12">
+                        <div class="cart-total">
+                    <h3>Payment method</h3>
+                    <p class="d-flex total-price">
+                        <span>MOMO</span></td><td><span><input class="form-control" id="payment" type="radio" value="momo" name="payment"/></span>     
+                    </p>
+                     <p class="d-flex total-price">
+                            <span>Bank</span>
+                            <span><input class="form-control" type="radio" value="bank" id="payment" name="payment"/></span>
+                    </p>
+                     <p class="d-flex total-price">
+                            <span>Cash</span>
+                            <span><input class="form-control" type="radio" value="cash" id="payment" name="payment"/></span>
+                    </p>
+
+</div></div>
+                        <div class="col-md-12" style="margin-bottom: 50px; margin-top:10px;" ><input type="button" id="order" value="Buy it Now" name="order" class="btn btn-primary py-3 px-5"></div>
+                    </div>
+
 
                                 </div>
                             </div>
@@ -454,8 +486,9 @@ include('includes/header.php');
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <a href="signin.php"><button type="button" id="buyProduct"
-                            class="btn btn-primary">Login</button></a>
+
+                    <a href="signin.php"><button type="button" id="buyProduct" class="btn btn-primary">Buy</button></a>
+
                 </div>
             </div>
         </div>
