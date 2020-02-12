@@ -10,7 +10,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
-    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+
     <link rel="stylesheet" href="css/animate.css">
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/owl.theme.default.min.css">
@@ -23,16 +23,16 @@
     <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/style.css">
 
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/css/bootstrap-notify.css">
-    <link>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <script>
     $(function() {
 
         $("#loader").hide()
+
+        $('#cart_table').DataTable();
 
         $("#buyProduct").click(function(event) {
 
@@ -146,12 +146,16 @@ include('includes/header.php');
             </div>
         </div>
     </div>
+
+
+
     <section class="ftco-section ftco-cart">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 ftco-animate">
-                    <div class="cart-list">
-                        <table class="table">
+
+                    <div class="table-responsive table--no-card m-b-30">
+                        <table class="table table-borderless table-striped table-earning" id="cart_table">
                             <thead class="thead-primary">
                                 <tr class="text-center">
                                     <th>&nbsp;</th>
@@ -188,52 +192,49 @@ if(isset($_GET['id'])){
                     $count++;
                     $id=$row['product_id'];
 
-                    
+                
                     $queryImg=mysqli_query($conn,"SELECT product_image FROM product_images WHERE product_id='$id'");
                     $rowImg=mysqli_fetch_assoc($queryImg);
             ?>
-                                <tr class="text-center">
+                                <tr class="justify-center">
                                     <td class="product-remove"><a href="?id=<?php echo $id ?>"><span
-                                                class="ion-ios-close"></span></a></td>
-                                    <td class="image-prod">
+                                                class="ion-ios-close" style="color:red; font-size:25px;"></span></a>
+                                    </td>
+                                    <td>
                                         <div class="img"
                                             style="background-image:url(<?php echo $rowImg["product_image"] ?>);"></div>
                                     </td>
-                                    <td class="product-name">
+                                    <td>
                                         <a href="<?php if(substr( $row['product_name'], 0, 4 ) === "http"){
                                                 echo $row['product_name'];
                                              }else{
-                                              "product-single.php?p=".str_replace(' ','-',$row['product_name']);
+                                             echo "product-single.php?p=".str_replace(' ','-',$row['product_name']);
                                              }?>">
-                                            <h3><?php echo $row["product_name"] ?></h3>
+                                            <h5><?php if(substr( $row['product_name'], 0, 4 ) === "http"){
+                                                echo "Product link";
+                                             }else{
+                                              echo $row['product_name'];
+                                             }?></h5>
                                         </a>
 
                                     </td>
-                                    <td class="price">$<?php echo $row["total_price"]/$row["quantity"] ?></td>
-                                    <td class="quantity">
+                                    <td>$<?php echo $row["total_price"]/$row["quantity"] ?></td>
+                                    <td>
                                         <div class="input-group mb-3">
-                                            <input type="text" name="quantity"
-                                                class="quantity form-control input-number"
-                                                value="<?php echo $row['quantity'] ?>" readonly min="1" max="100">
+                                            <input type="text" name="quantity" class="form-control input-number"
+                                                value="<?php echo $row['quantity'] ?>" min="1" max="100">
                                         </div>
                                     </td>
-                                    <td class="total">$<?php echo $row["total_price"] ?></td>
+                                    <td>$<?php echo $row["total_price"] ?></td>
                                 </tr>
                                 <?php
             }
                ?>
                             </tbody>
                         </table>
-
-                        <?php
-                        if($count==0){
-
-                            ?>
-                        <h3>Your cart is empty, add items to cart first</h3>
-                        <?php
-                        }
-                         ?>
                     </div>
+
+
                 </div>
             </div>
             <?php
@@ -391,9 +392,15 @@ include('includes/footer.php');
             <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
                 stroke="#F96D00" /></svg></div>
 
+
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js">
+    </script>
+
+
     <script src="js/jquery-migrate-3.0.1.min.js" type="dc226639c4a99d0325a19ed9-text/javascript"></script>
     <script src="js/popper.min.js" type="dc226639c4a99d0325a19ed9-text/javascript"></script>
-    <script src="js/bootstrap.min.js" type="dc226639c4a99d0325a19ed9-text/javascript"></script>
+
     <script src="js/jquery.easing.1.3.js" type="dc226639c4a99d0325a19ed9-text/javascript"></script>
     <script src="js/jquery.waypoints.min.js" type="dc226639c4a99d0325a19ed9-text/javascript"></script>
     <script src="js/jquery.stellar.min.js" type="dc226639c4a99d0325a19ed9-text/javascript"></script>
@@ -459,6 +466,9 @@ include('includes/footer.php');
     gtag('config', 'UA-23581568-13');
     </script>
     <script src="./js/rocket-loader.min.js" data-cf-settings="dc226639c4a99d0325a19ed9-|49" defer=""></script>
+
+
+
 </body>
 
 <!-- Mirrored from colorlib.com/preview/theme/minishop/cart.php by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 12 Dec 2019 10:38:12 GMT -->

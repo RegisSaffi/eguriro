@@ -23,17 +23,15 @@
     <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/style.css">
 
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/css/bootstrap-notify.css">
-    <link>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <script>
     $(function() {
 
-        //notify("jhgj", "jhhjjhhj", "danger")
-
+        $('#order_table').DataTable();
+        $('#order2_table').DataTable();
     })
 
     function notify(t, st, tp) {
@@ -71,30 +69,63 @@ include('includes/header.php');
             </div>
         </div>
     </div>
-    <section class="ftco-section ftco-cart">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 ftco-animate">
-                    <div class="cart-list">
-                        <table class="table">
-                            <thead class="thead-primary">
-                                <tr class="text-center">
 
-                                    <th>&nbsp;</th>
-                                    <th>Product</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                    <th>Orders note</th>
-                                    <th>Payment method</th>
-                                    <th>Status</th>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
 
-                                </tr>
-                            </thead>
-                            <tbody>
+                    <div class="card-body">
+                        <ul class="nav nav-tabs nav-justified flex-column flex-sm-row nav-primary" id="myTab"
+                            role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                    aria-controls="home" aria-selected="true">Orders from links</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                    aria-controls="profile" aria-selected="false">Orders from Eguriro</a>
+                            </li>
+
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+                                <div class="row">
+
+                                    <!-- <h4 class="card-title">Unpublished courses</h4> -->
+                                    <div class="col-sm-12">
+                                        <p style="margin:10px;">Here you will find orders you placed via price
+                                            calculator
+                                            only</p>
+                                    </div>
+
+                                    <br /><br>
+                                    <div class="col-md-12 ftco-animate">
+
+                                        <div class="table-responsive table--no-card m-b-30">
+                                            <table class="table table-borderless table-striped table-earning"
+                                                id="order_table">
+                                                <thead class="thead-primary">
+                                                    <tr class="text-start">
+
+                                                        <th>&nbsp;</th>
+                                                        <th>Order No</th>
+                                                        <th>Product</th>
+
+                                                        <th>Quantity</th>
+
+                                                        <th>Notes</th>
+
+                                                        <th>Payment</th>
+                                                        <th>Total</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
 
 
-                                <?php
+                                                    <?php
                                  $client=md5(
     $_SERVER['REMOTE_ADDR'] .
     $_SERVER['HTTP_USER_AGENT']);
@@ -104,99 +135,172 @@ include('includes/header.php');
     }
     
     ?>
-    
-    <?php
+
+                                                    <?php
                $sqlOrders="SELECT * FROM out_orders WHERE client_id='$client'";
                 $queryOrders=mysqli_query($conn,$sqlOrders);
                    $total=0;
                 while($row=mysqli_fetch_assoc($queryOrders)){
              $total++;
-                    $id=$row['product_id'];
+                    $id=$row['out_order_id'];
                     $queryImg=mysqli_query($conn,"SELECT product_image FROM product_images WHERE product_id='$id'");
                     $rowImg=mysqli_fetch_assoc($queryImg);
                      ?>
-                                <tr class="text-center">
-                                    <td class="image-prod">
-                                        <div class="img"
-                                            style="background-image:url(<?php echo $rowImg["product_image"] ?>);"></div>
-                                    </td>
-                                    <td class="product-name">
-                                        <a
-                                            href="<?php echo str_replace(' ','-',$row['product_link'])?>">
-                                            <h3><?php echo $row["product_link"] ?></h3>
-                                        </a>
+                                                    <tr class="text-start">
+                                                        <td class="image-prod">
+                                                            <div class="img"
+                                                                style="background-image:url(<?php echo $rowImg["product_image"] ?>);">
+                                                            </div>
+                                                        </td>
+                                                        <td>
 
-                                    </td>
-                                    <td class="price">$<?php echo $row["total_price"]; ?></td>
-                                    <td class="total">
+                                                            <?php echo $row["order_number"] ?>
 
-                                        <?php echo $row['quantity'] ?>
 
-                                    </td>
-                                    <td class="total">$<?php echo $row["total_price"] ?></td>
-                                    <td class="total"><?php echo $row['order_note'];?> </td>
-                                    <td class="total"> </td>
-                                    <td class="total"><?php echo $row["order_status"] ?></td>
-                                </tr>
+                                                        </td>
+                                                        <td>
+                                                            <a href="<?php echo $row['product_link']?>">
+                                                                <h5>Product link</h5>
+                                                            </a>
 
-                                <?php
+                                                        </td>
+                                                        <td><?php echo $row["quantity"]; ?></td>
+                                                        <td>
+
+                                                            <?php echo $row['order_status'] ?>
+
+                                                        </td>
+                                                        <td>Payment here</td>
+                                                        <td>$<?php echo $row['total_price'];?> </td>
+
+
+                                                    </tr>
+
+                                                    <?php
             }
                ?>
-               <?php
 
-                $sqlOrders="SELECT * FROM orders WHERE client_id='$client'";
-                $queryOrders=mysqli_query($conn,$sqlOrders);
+                                                </tbody>
+                                            </table>
+                                        </div>
 
-             
-                   $total=0;
-                while($row=mysqli_fetch_assoc($queryOrders)){
-             $total++;
-                    $id=$row['product_id'];
-                    $queryImg=mysqli_query($conn,"SELECT product_image FROM product_images WHERE product_id='$id'");
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                                <div class="row">
+
+                                    <!-- <h4 class="card-title">Unpublished courses</h4> -->
+                                    <div class="col-sm-12">
+                                        <p style="margin:10px;">Products you placed from our products list will appear
+                                            here
+                                            too.</p>
+                                    </div>
+
+
+                                    <br /><br>
+                                    <div class="col-md-12 ftco-animate">
+
+                                        <div class="table-responsive table--no-card m-b-30">
+                                            <table class="table table-borderless table-striped table-earning"
+                                                id="order2_table">
+                                                <thead class="thead-primary">
+                                                    <tr class="text-start">
+
+                                                        <th>&nbsp;</th>
+                                                        <th>Order No</th>
+                                                        <th>Product</th>
+
+                                                        <th>Quantity</th>
+
+                                                        <th>Notes</th>
+
+                                                        <th>Payment</th>
+                                                        <th>Total</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+
+                                                    <?php
+                                 $client=md5(
+    $_SERVER['REMOTE_ADDR'] .
+    $_SERVER['HTTP_USER_AGENT']);
+
+    if(isset($_COOKIE["eguriro"])) {
+       $client=$_COOKIE["eguriro"];
+    }
+    
+    ?>
+
+                                                    <?php
+               $sqlOrders2="SELECT * FROM orders WHERE client_id='$client'";
+                $queryOrders2=mysqli_query($conn,$sqlOrders2);
+                   $total2=0;
+                while($row2=mysqli_fetch_assoc($queryOrders2)){
+             $total2++;
+                    $id2=$row2['order_id'];
+                    $queryImg=mysqli_query($conn,"SELECT product_image FROM product_images WHERE product_id='$id2'");
                     $rowImg=mysqli_fetch_assoc($queryImg);
                      ?>
-                                <tr class="text-center">
-                                    <td class="image-prod">
-                                        <div class="img"
-                                            style="background-image:url(<?php echo $rowImg["product_image"] ?>);"></div>
-                                    </td>
-                                    <td class="product-name">
-                                        <a
-                                            href="product-single.php?p=<?php echo str_replace(' ','-',$row['product_name'])?>">
-                                            <h3><?php echo $row["product_name"] ?></h3>
-                                        </a>
+                                                    <tr class="text-start">
+                                                        <td class="image-prod">
+                                                            <div class="img"
+                                                                style="background-image:url(<?php echo $rowImg["product_image"] ?>);">
+                                                            </div>
+                                                        </td>
+                                                        <td>
 
-                                    </td>
-                                    <td class="price">$<?php echo $row["total_price"]/$row["quantity"] ?></td>
-                                    <td class="total">
-
-                                        <?php echo $row['quantity'] ?>
-
-                                    </td>
-                                    <td class="total">$<?php echo $row["total_price"] ?></td>
-                                    <td class="total"><?php echo $row['order_note'];?> </td>
-                                    <td class="total"> <?php if($row['order_payment']=='cash'){ echo "Office location KN 87st,Beatitude house ,Second floor ,Door 13,phone : 0781816180"; } else if($row['order_payment']=='momo'){ echo " you can pay on our momo account 0781816180 TUYIZERE Eyse"; } else if($row['order_payment']=='bank'){ echo "you can pay on our Equity bank A/C : 4002100384793 TUYIZERE Eyse"; }?> </td>
-                                    <td class="total"><?php echo $row["order_status"] ?></td>
-                                </tr>
-
-                                <?php
-            }
-               ?>
-               
-               
-               
+                                                            <?php echo $row2["order_number"] ?>
 
 
-                            </tbody>
-                        </table>
+                                                        </td>
+                                                        <td>
 
-                       
+                                                            <h5><?php echo $row2['product_name']?></h5>
+
+                                                        </td>
+                                                        <td><?php echo $row2["quantity"]; ?></td>
+                                                        <td>
+
+                                                            <?php echo $row2['order_note'] ?>
+
+                                                        </td>
+                                                        <td> <?php echo $row2['order_payment'] ?></td>
+                                                        <td>$<?php echo $row2['total_price'];?> </td>
+
+                                                    </tr>
+
+                                                    <?php
+                                              }
+                                            ?>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
-    </section>
+    </div>
+
+
+
+
+
     <?php
 
 include('includes/footer.php');
@@ -207,6 +311,10 @@ include('includes/footer.php');
             <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
             <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
                 stroke="#F96D00" /></svg></div>
+
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js">
+    </script>
 
     <script src="js/jquery-migrate-3.0.1.min.js" type="dc226639c4a99d0325a19ed9-text/javascript"></script>
     <script src="js/popper.min.js" type="dc226639c4a99d0325a19ed9-text/javascript"></script>

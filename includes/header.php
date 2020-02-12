@@ -7,12 +7,15 @@ include("php/connect.php");
     $_SERVER['HTTP_USER_AGENT']);
 
     $name="Account";
+    $myAccount=null;
 
       if(isset($_COOKIE["eguriro"])) {
        $client=$_COOKIE["eguriro"];
 
         $accountQuery=mysqli_query($conn,"SELECT * FROM clients WHERE client_unique='$client'");
         $name=mysqli_fetch_assoc($accountQuery)['client_fname'];
+
+        $myAccount=mysqli_fetch_assoc($accountQuery);
     }
 
       $sqlProducts="SELECT * FROM cart WHERE client_id='$client'";
@@ -63,6 +66,7 @@ include("php/connect.php");
                                          ?>
 
                         <a class="dropdown-item" href="orders.php">Orders</a>
+                        <a class="dropdown-item" href="account.php">Account</a>
                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModal">Logout</a>
 
                         <?php  

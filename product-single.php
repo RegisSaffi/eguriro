@@ -263,7 +263,7 @@ if(isset($_GET['p'])){
                         if(mysqli_num_rows($queryImg2)>1){
 
                         ?>
-                        <div class="col">
+                        <div class="col-4">
                             <a href="<?php echo $rowImg2['product_image']   ?>" class="image-popup prod-img-bg"><img
                                     src="<?php echo $rowImg2['product_image']   ?>" class="img-fluid"
                                     alt="Product image" style="height:100px !important;"></a>
